@@ -18,6 +18,8 @@ import GamePage from "./pages/GamePage";
 
 function App() {
 
+    console.log("API URL:", import.meta.env.VITE_API_URL);
+
     const [showLogin, setShowLogin] = useState(false);
     const [favoritos, setFavoritos] = useState([]);
 
