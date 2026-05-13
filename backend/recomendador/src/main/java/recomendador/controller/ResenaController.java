@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/resenas")
-@CrossOrigin("*")
+
 public class ResenaController {
 
 	@Autowired

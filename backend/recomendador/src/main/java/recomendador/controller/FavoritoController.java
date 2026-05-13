@@ -10,7 +10,7 @@ import recomendador.repository.UsuarioRepository;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
+
 @RestController
 @RequestMapping("/favoritos")
 public class FavoritoController {

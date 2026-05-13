@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/lista")
-@CrossOrigin("*")
 public class ListaJuegoController {
 
 	@Autowired

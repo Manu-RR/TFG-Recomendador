@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@CrossOrigin(origins = "http://localhost:5173")
+
 @RestController
 @RequestMapping("/rawg")
 public class RawgController {
