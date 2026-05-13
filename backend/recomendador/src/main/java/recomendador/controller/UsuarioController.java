@@ -69,6 +69,8 @@ public class UsuarioController {
 	        encoder.encode(usuario.getPassword())
 	    );
 
+	    usuario.setRol("ADMIN");
+
 	    return usuarioRepository.save(usuario);
 	}
 
