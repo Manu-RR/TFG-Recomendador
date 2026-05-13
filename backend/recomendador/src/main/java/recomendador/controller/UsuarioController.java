@@ -1,6 +1,7 @@
 package recomendador.controller;
 
 import recomendador.model.Favorito;
+
 //Importamos la entidad Usuario
 import recomendador.model.Usuario;
 import recomendador.repository.FavoritoRepository;
@@ -10,6 +11,7 @@ import recomendador.repository.UsuarioRepository;
 
 //Importaciones necesarias para Spring
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -61,20 +63,35 @@ public class UsuarioController {
 	@PostMapping("/registro")
 	public Usuario registrarUsuario(@RequestBody Usuario usuario) {
 
-		return usuarioRepository.save(usuario);
+	    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+	    usuario.setPassword(
+	        encoder.encode(usuario.getPassword())
+	    );
+
+	    return usuarioRepository.save(usuario);
 	}
 
 	@PostMapping("/login")
 	public Usuario login(@RequestBody Usuario loginRequest) {
 
-		Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(loginRequest.getEmail());
+	    Optional<Usuario> optionalUsuario =
+	            usuarioRepository.findByEmail(loginRequest.getEmail());
 
-		if (optionalUsuario.isPresent() && optionalUsuario.get().getPassword().equals(loginRequest.getPassword())) {
+	    if (optionalUsuario.isPresent()) {
 
-			return optionalUsuario.get();
-		}
+	        BCryptPasswordEncoder encoder =
+	                new BCryptPasswordEncoder();
 
-		throw new RuntimeException("Credenciales incorrectas");
+	        if (encoder.matches(
+	                loginRequest.getPassword(),
+	                optionalUsuario.get().getPassword())) {
+
+	            return optionalUsuario.get();
+	        }
+	    }
+
+	    throw new RuntimeException("Credenciales incorrectas");
 	}
 
 	@PutMapping("/{id}")
