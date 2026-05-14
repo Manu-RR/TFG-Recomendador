@@ -3,7 +3,6 @@ import GameList from "./components/GameList";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";
 import LoginModal from "./components/LoginModal";
-import { Toaster } from "react-hot-toast";
 import AnimatedBackground from "./components/AnimatedBackground";
 import AdminPanel from "./components/AdminPanel";
 import axios from "axios";
@@ -362,14 +361,7 @@ function App() {
                             )
                         }
 
-                        <Toaster
-                            position="top-right"
-                            toastOptions={{
-                                style: {
-                                    zIndex: 999999
-                                }
-                            }}
-                        />
+                        
 
                     </div>
 

@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 import toast from "react-hot-toast";
 import { API_URL } from "../config";
-
+import { Toaster } from "react-hot-toast";
 import Resenas from "../components/Resenas";
 
 function GamePage() {
@@ -161,6 +161,8 @@ function GamePage() {
 
     return (
 
+        
+
         <div className="
             min-h-screen
             text-white
@@ -178,6 +180,10 @@ function GamePage() {
 
             overflow-x-hidden
         ">
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
 
             {/* BOTON VOLVER */}
 
