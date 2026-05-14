@@ -435,92 +435,133 @@ function GameList() {
                         ">
 
                             {
-                                recomendados
+    recomendados
+        .filter(game => game.background_image)
 
-                                    // SOLO JUEGOS CON IMAGEN
-                                    .filter(
-                                        game => game.background_image
-                                    )
+        // QUITAR FAVORITOS
+        .filter(
+            game =>
+                !favorites.some(
+                    fav => fav.juegoId === game.id
+                )
+        )
 
-                                    // QUITAR JUEGOS YA EN FAVORITOS
-                                    .filter(
-                                        game =>
+        .slice(0, 6)
 
-                                            !favorites.some(
-                                                fav =>
-                                                    fav.juegoId === game.id
-                                            )
-                                    )
+        .length > 0 ? (
 
-                                    // MAXIMO 6
-                                    .slice(0, 6)
+        <>
 
-                                    .map((game) => (
+            {
+                                    recomendados
+                                        .filter(game => game.background_image)
 
-                                        <motion.div
-                                            key={game.id}
-                                            onClick={() =>
-                                                navigate(`/game/${game.id}`)
-                                            }
-                                            whileHover={{
-                                                scale: 1.05,
-                                                y: -10
-                                            }}
-                                            className="
-                                                min-w-[220px]
-                                                sm:min-w-[240px]
-                                                lg:min-w-[260px]
-                                                bg-[#111827]
-                                                rounded-3xl
-                                                overflow-hidden
-                                                shadow-2xl
-                                                border
-                                                border-cyan-500/20
-                                                hover:border-cyan-400
-                                                transition-all
-                                                duration-300
-                                                cursor-pointer
-                                            "
-                                        >
+                                        .filter(
+                                            game =>
+                                                !favorites.some(
+                                                    fav => fav.juegoId === game.id
+                                                )
+                                        )
 
-                                            <img
-                                                src={
-                                                    game.background_image
+                                        .slice(0, 6)
+
+                                        .map((game) => (
+
+                                            <motion.div
+                                                key={game.id}
+                                                onClick={() =>
+                                                    navigate(`/game/${game.id}`)
                                                 }
-                                                alt={game.name}
+                                                whileHover={{
+                                                    scale: 1.05,
+                                                    y: -10
+                                                }}
                                                 className="
-                                                    w-full
-                                                    h-44
-                                                    sm:h-52
-                                                    object-cover
+                                                    min-w-[220px]
+                                                    sm:min-w-[240px]
+                                                    lg:min-w-[260px]
+                                                    bg-[#111827]
+                                                    rounded-3xl
+                                                    overflow-hidden
+                                                    shadow-2xl
+                                                    border
+                                                    border-cyan-500/20
+                                                    hover:border-cyan-400
+                                                    transition-all
+                                                    duration-300
+                                                    cursor-pointer
                                                 "
-                                            />
+                                            >
 
-                                            <div className="p-5">
+                                                <img
+                                                    src={game.background_image}
+                                                    alt={game.name}
+                                                    className="
+                                                        w-full
+                                                        h-44
+                                                        sm:h-52
+                                                        object-cover
+                                                    "
+                                                />
 
-                                                <h3 className="
-                                                    text-lg
-                                                    sm:text-xl
-                                                    font-bold
-                                                    text-white
-                                                    mb-3
-                                                    line-clamp-1
-                                                ">
-                                                    {game.name}
-                                                </h3>
+                                                <div className="p-5">
 
-                                                <p className="
-                                                    text-cyan-400
-                                                    font-bold
-                                                ">
-                                                    ⭐ {game.rating}
-                                                </p>
+                                                    <h3 className="
+                                                        text-lg
+                                                        sm:text-xl
+                                                        font-bold
+                                                        text-white
+                                                        mb-3
+                                                        line-clamp-1
+                                                    ">
+                                                        {game.name}
+                                                    </h3>
 
-                                            </div>
+                                                    <p className="
+                                                        text-cyan-400
+                                                        font-bold
+                                                    ">
+                                                        ⭐ {game.rating}
+                                                    </p>
 
-                                        </motion.div>
+                                                </div>
 
-                                    ))
+                                            </motion.div>
+
+                                        ))
+                                        }
+
+                                    </>
+
+                                ) : (
+
+                                    <div className="
+                                        w-full
+                                        text-center
+                                        py-12
+                                        bg-[#111827]
+                                        rounded-3xl
+                                        border
+                                        border-cyan-500/20
+                                    ">
+
+                                        <h3 className="
+                                            text-2xl
+                                            font-bold
+                                            text-cyan-400
+                                            mb-3
+                                        ">
+                                            No hay recomendaciones disponibles
+                                        </h3>
+
+                                        <p className="text-gray-400">
+                                            Añade favoritos o cambia estados para
+                                            recibir recomendaciones personalizadas.
+                                        </p>
+
+                                    </div>
+
+                                )
                             }
 
                         </div>
