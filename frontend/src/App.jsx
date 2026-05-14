@@ -7,6 +7,8 @@ import AnimatedBackground from "./components/AnimatedBackground";
 import AdminPanel from "./components/AdminPanel";
 import axios from "axios";
 import PerfilUsuario from "./components/PerfilUsuario";
+import { Toaster } from "react-hot-toast";
+
 import {
     BrowserRouter,
     Routes,
@@ -65,6 +67,11 @@ function App() {
                         overflow-hidden
                     ">
 
+                    <Toaster
+                        position="top-right"
+                        reverseOrder={false}
+                    />
+                    
                         <AnimatedBackground />
 
                         {/* EFECTOS */}
