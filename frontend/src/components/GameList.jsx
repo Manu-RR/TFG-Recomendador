@@ -463,24 +463,24 @@ function GameList() {
                         ">
 
                             {
-    recomendados
-        .filter(game => game.background_image)
+                            recomendados
+                                .filter(game => game.background_image)
 
-        // QUITAR FAVORITOS
-        .filter(
-            game =>
-                !favorites.some(
-                    fav => fav.juegoId === game.id
-                )
-        )
+                                // QUITAR FAVORITOS
+                                .filter(
+                                    game =>
+                                        !favorites.some(
+                                            fav => fav.juegoId === game.id
+                                        )
+                                )
 
-        .slice(0, 6)
+                                .slice(0, 6)
 
-        .length > 0 ? (
+                                .length > 0 ? (
 
-        <>
+                                <>
 
-            {
+                                    {
                                     recomendados
                                         .filter(game => game.background_image)
 
@@ -810,134 +810,159 @@ function GameList() {
                 ">
 
                     {
-                        juegosFiltrados.map((game) => (
+                        juegosFiltrados.length > 0 ? (
 
-                            <motion.div
-                                key={game.id}
-                                onClick={() =>
-                                    navigate(`/game/${game.id}`)
-                                }
-                                whileHover={{
-                                    scale: 1.05,
-                                    y: -10
-                                }}
-                                className="
-                                    bg-[#111827]
-                                    rounded-3xl
-                                    overflow-hidden
-                                    shadow-2xl
-                                    border
-                                    border-gray-800
-                                    hover:border-purple-500
-                                    hover:shadow-purple-500/20
-                                    transition-all
-                                    duration-300
-                                    cursor-pointer
-                                "
-                            >
+                            juegosFiltrados.map((game) => (
 
-                                <img
-                                    src={
-                                        game.background_image
+                                <motion.div
+                                    key={game.id}
+                                    onClick={() =>
+                                        navigate(`/game/${game.id}`)
                                     }
-                                    alt={game.name}
+                                    whileHover={{
+                                        scale: 1.05,
+                                        y: -10
+                                    }}
                                     className="
-                                        w-full
-                                        h-48
-                                        sm:h-56
-                                        lg:h-60
-                                        object-cover
-                                        object-top
+                                        bg-[#111827]
+                                        rounded-3xl
+                                        overflow-hidden
+                                        shadow-2xl
+                                        border
+                                        border-gray-800
+                                        hover:border-purple-500
+                                        hover:shadow-purple-500/20
+                                        transition-all
+                                        duration-300
+                                        cursor-pointer
                                     "
-                                />
+                                >
 
-                                <div className="p-5">
+                                    <img
+                                        src={game.background_image}
+                                        alt={game.name}
+                                        className="
+                                            w-full
+                                            h-48
+                                            sm:h-56
+                                            lg:h-60
+                                            object-cover
+                                            object-top
+                                        "
+                                    />
 
-                                    <div className="
-                                        flex
-                                        justify-end
-                                        mb-3
-                                    ">
+                                    <div className="p-5">
 
-                                        <button
-                                            onClick={(e) => {
+                                        <div className="
+                                            flex
+                                            justify-end
+                                            mb-3
+                                        ">
 
-                                                e.stopPropagation();
+                                            <button
+                                                onClick={(e) => {
 
-                                                toggleFavorite(
-                                                    game
-                                                );
+                                                    e.stopPropagation();
 
-                                            }}
-                                            className="
-                                                text-3xl
-                                                hover:scale-125
-                                                transition-all
-                                            "
-                                        >
+                                                    toggleFavorite(game);
 
+                                                }}
+                                                className="
+                                                    text-3xl
+                                                    hover:scale-125
+                                                    transition-all
+                                                "
+                                            >
+
+                                                {
+                                                    favorites.some(
+                                                        fav =>
+                                                            fav.juegoId === game.id
+                                                    )
+
+                                                        ? "❤️"
+
+                                                        : "🤍"
+                                                }
+
+                                            </button>
+
+                                        </div>
+
+                                        <h3 className="
+                                            text-lg
+                                            sm:text-xl
+                                            font-bold
+                                            text-white
+                                            mb-2
+                                            line-clamp-1
+                                        ">
+                                            {game.name}
+                                        </h3>
+
+                                        <p className="
+                                            text-yellow-400
+                                            font-semibold
+                                        ">
+                                            ⭐ {game.rating}
+                                        </p>
+
+                                        <p className="
+                                            text-gray-400
+                                            mt-2
+                                        ">
+                                            🎯 Dificultad:
+                                            {" "}
+                                            {game.dificultad}/5
+                                        </p>
+
+                                        <p className="
+                                            text-gray-400
+                                        ">
+                                            ⏱ Duración:
+                                            {" "}
                                             {
-                                                favorites.some(
-                                                    fav =>
-                                                        fav.juegoId
-                                                        === game.id
-                                                )
-
-                                                    ? "❤️"
-
-                                                    : "🤍"
+                                                game.duracion > 0
+                                                    ? game.duracion
+                                                    : "N/D"
                                             }
-
-                                        </button>
+                                            {" "}
+                                            horas
+                                        </p>
 
                                     </div>
 
-                                    <h3 className="
-                                        text-lg
-                                        sm:text-xl
-                                        font-bold
-                                        text-white
-                                        mb-2
-                                        line-clamp-1
-                                    ">
-                                        {game.name}
-                                    </h3>
+                                </motion.div>
 
-                                    <p className="
-                                        text-yellow-400
-                                        font-semibold
-                                    ">
-                                        ⭐ {game.rating}
-                                    </p>
+                            ))
 
-                                    <p className="
-                                        text-gray-400
-                                        mt-2
-                                    ">
-                                        🎯 Dificultad:
-                                        {" "}
-                                        {game.dificultad}/5
-                                    </p>
+                        ) : (
 
-                                    <p className="
-                                        text-gray-400
-                                    ">
-                                        ⏱ Duración:
-                                        {" "}
-                                        {
-                                            game.duracion > 0
-                                                ? game.duracion
-                                                : "N/D"
-                                        }
-                                        {" "}
-                                        horas
-                                    </p>
+                            <div className="
+                                col-span-full
+                                text-center
+                                py-20
+                            ">
 
-                                </div>
+                                <h2 className="
+                                    text-3xl
+                                    font-bold
+                                    text-cyan-400
+                                    mb-4
+                                ">
+                                    No existe el juego que estás buscando
+                                </h2>
 
-                            </motion.div>
+                                <p className="
+                                    text-gray-400
+                                    text-lg
+                                ">
+                                    Prueba con otro nombre o cambia los filtros.
+                                </p>
 
-                        ))
+                            </div>
+
+                        )
                     }
 
                 </div>
