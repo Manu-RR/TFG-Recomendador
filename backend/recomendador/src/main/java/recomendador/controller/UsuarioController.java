@@ -76,8 +76,6 @@ public class UsuarioController {
 
 		Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(loginRequest.getEmail());
 
-		// EMAIL NO EXISTE
-
 		if (optionalUsuario.isEmpty()) {
 
 			response.put("success", false);
@@ -90,9 +88,9 @@ public class UsuarioController {
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		// PASSWORD INCORRECTA
-
-		if (!encoder.matches(loginRequest.getPassword(), usuario.getPassword())) {
+		if (!encoder.matches(
+				loginRequest.getPassword(),
+				usuario.getPassword())) {
 
 			response.put("success", false);
 			response.put("message", "Contraseña incorrecta");
@@ -100,10 +98,17 @@ public class UsuarioController {
 			return response;
 		}
 
-		// LOGIN CORRECTO
+		// DATOS SIMPLES
+
+		Map<String, Object> usuarioData = new HashMap<>();
+
+		usuarioData.put("id", usuario.getId());
+		usuarioData.put("email", usuario.getEmail());
+		usuarioData.put("nombre", usuario.getNombre());
+		usuarioData.put("rol", usuario.getRol());
 
 		response.put("success", true);
-		response.put("usuario", usuario);
+		response.put("usuario", usuarioData);
 
 		return response;
 	}
