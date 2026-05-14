@@ -26,19 +26,20 @@ function LoginModal({ onClose }) {
                 }
             );
 
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("usuario", email);
-            localStorage.setItem("rol", response.data.rol);
+            // LOGIN FALLIDO
 
-            // Obtener usuario
-            const usuarioResponse = await axios.get(
-                `${API_URL}/usuarios/email/${email}`
-            );
+            if (!response.data.success) {
 
-            localStorage.setItem(
-                "usuarioId",
-                usuarioResponse.data.id
-            );
+                toast.error(response.data.message);
+
+                return;
+            }
+
+            const usuario = response.data.usuario;
+
+            localStorage.setItem("usuario", usuario.email);
+            localStorage.setItem("rol", usuario.rol);
+            localStorage.setItem("usuarioId", usuario.id);
 
             toast.success("Login correcto");
 
@@ -48,7 +49,7 @@ function LoginModal({ onClose }) {
 
         } catch (error) {
 
-            toast.error("Credenciales incorrectas");
+            toast.error("Error conectando con el servidor");
 
         }
     };

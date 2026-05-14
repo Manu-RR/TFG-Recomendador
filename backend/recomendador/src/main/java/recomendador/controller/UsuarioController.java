@@ -70,18 +70,42 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/login")
-	public Usuario login(@RequestBody Usuario loginRequest) {
+	public Map<String, Object> login(@RequestBody Usuario loginRequest) {
+
+		Map<String, Object> response = new HashMap<>();
 
 		Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(loginRequest.getEmail());
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		if (optionalUsuario.isPresent()
-				&& encoder.matches(loginRequest.getPassword(), optionalUsuario.get().getPassword())) {
+		// EMAIL NO EXISTE
 
-			return optionalUsuario.get();
+		if (optionalUsuario.isEmpty()) {
+
+			response.put("success", false);
+			response.put("message", "El usuario no existe");
+
+			return response;
 		}
 
-		throw new RuntimeException("Credenciales incorrectas");
+		Usuario usuario = optionalUsuario.get();
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		// PASSWORD INCORRECTA
+
+		if (!encoder.matches(loginRequest.getPassword(), usuario.getPassword())) {
+
+			response.put("success", false);
+			response.put("message", "Contraseña incorrecta");
+
+			return response;
+		}
+
+		// LOGIN CORRECTO
+
+		response.put("success", true);
+		response.put("usuario", usuario);
+
+		return response;
 	}
 
 	@PutMapping("/{id}")
