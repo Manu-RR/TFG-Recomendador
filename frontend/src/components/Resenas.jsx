@@ -8,6 +8,8 @@ function Resenas({ juego }) {
     const [comentario, setComentario] =
         useState("");
 
+    const MAX_CARACTERES = 300;
+
     const [puntuacion, setPuntuacion] =
         useState(5);
 
@@ -25,6 +27,8 @@ function Resenas({ juego }) {
         cargarResenas();
 
     }, []);
+
+    
 
     const cargarResenas = () => {
 
@@ -44,7 +48,22 @@ function Resenas({ juego }) {
 
         if (!usuarioId) return;
 
-        if (!comentario.trim()) return;
+        if (!comentario.trim()) {
+
+            toast.error(
+                "La reseña está vacía"
+            );
+
+            return;
+        }
+        if (comentario.length > MAX_CARACTERES) {
+
+            toast.error(
+                "Has superado el límite"
+            );
+
+            return;
+        }
 
         await axios.post(
             `${API_URL}/resenas`,
@@ -57,6 +76,10 @@ function Resenas({ juego }) {
                     id: usuarioId
                 }
             }
+        );
+
+        toast.success(
+            "Reseña publicada"
         );
 
         setComentario("");
@@ -153,9 +176,22 @@ function Resenas({ juego }) {
 
                     <textarea
                         value={comentario}
-                        onChange={(e) =>
-                            setComentario(e.target.value)
-                        }
+                        onChange={(e) => {
+
+                            if (
+                                e.target.value.length
+                                <=
+                                MAX_CARACTERES
+                            ) {
+
+                                setComentario(
+                                    e.target.value
+                                );
+
+                            }
+
+                        }}
+
                         placeholder="Escribe tu reseña..."
                         className="
                             w-full
@@ -171,6 +207,31 @@ function Resenas({ juego }) {
                             h-32
                         "
                     />
+                    <div className="
+                        flex
+                        justify-end
+                        mt-2
+                    ">
+
+                        <p className={`
+                            text-sm
+
+                            ${
+                                comentario.length > 250
+
+                                    ? "text-red-400"
+
+                                    : "text-gray-400"
+                            }
+                        `}>
+
+                            {comentario.length}
+                            /
+                            {MAX_CARACTERES}
+
+                        </p>
+
+                    </div>
 
                     {/* STARS */}
 
