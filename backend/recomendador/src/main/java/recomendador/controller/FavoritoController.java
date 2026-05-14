@@ -11,6 +11,7 @@ import recomendador.repository.UsuarioRepository;
 import java.util.List;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/favoritos")
 public class FavoritoController {

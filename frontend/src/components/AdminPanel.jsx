@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 import EditarUsuarioModal from "./EditarUsuarioModal";
 
 function AdminPanel() {
@@ -19,7 +20,7 @@ function AdminPanel() {
     const cargarUsuarios = () => {
 
         axios
-            .get(`${import.meta.env.VITE_API_URL}/usuarios/stats`)
+            .get(`${API_URL}/usuarios/stats`)
             .then((response) => {
 
                 setStats(response.data);
@@ -27,7 +28,7 @@ function AdminPanel() {
             });
 
         axios
-            .get(`${import.meta.env.VITE_API_URL}/usuarios`)
+            .get(`${API_URL}/usuarios`)
             .then((response) => {
 
                 setUsuarios(response.data);
@@ -42,7 +43,7 @@ function AdminPanel() {
 
             await axios.delete(
 
-                `${import.meta.env.VITE_API_URL}/usuarios/${id}`,
+                `${API_URL}/usuarios/${id}`,
 
                 {
                     headers: {

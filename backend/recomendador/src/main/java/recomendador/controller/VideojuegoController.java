@@ -16,6 +16,7 @@ import recomendador.repository.UsuarioRepository;
 import java.util.List;
 import java.util.ArrayList;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/videojuegos")
 public class VideojuegoController {

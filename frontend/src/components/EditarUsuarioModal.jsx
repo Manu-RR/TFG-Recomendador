@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import { API_URL } from "../config";
 
 function EditarUsuarioModal({
 
@@ -35,7 +36,7 @@ function EditarUsuarioModal({
 
             await axios.put(
 
-                `${import.meta.env.VITE_API_URL}/usuarios/${usuario.id}`,
+                `${API_URL}/usuarios/${usuario.id}`,
 
                 {
                     nombre,

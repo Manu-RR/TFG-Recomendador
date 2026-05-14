@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { API_URL } from "../config";
 import Resenas from "./Resenas";
 
 function GameModal({
@@ -24,7 +25,7 @@ function GameModal({
             // SCREENSHOTS
             axios
                 .get(
-                    `${import.meta.env.VITE_API_URL}/rawg/juego/${game.id}/screenshots`
+                    `${API_URL}/rawg/juego/${game.id}/screenshots`
                 )
                 .then((response) => {
 
@@ -40,7 +41,7 @@ function GameModal({
             // TRAILERS
             axios
                 .get(
-                    `${import.meta.env.VITE_API_URL}/rawg/juego/${game.id}/trailers`
+                    `${API_URL}/rawg/juego/${game.id}/trailers`
                 )
                 .then((response) => {
 
@@ -64,7 +65,7 @@ function GameModal({
         try {
 
             await axios.post(
-                `${import.meta.env.VITE_API_URL}/lista`,
+                `${API_URL}/lista`,
                 {
                     juegoId: game.id,
                     nombreJuego: game.name,

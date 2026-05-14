@@ -22,11 +22,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
-//Indicamos que esta clase es un controlador REST (API)
+@CrossOrigin(origins = "*")
 @RestController
-
-//Ruta base de este controlador
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
@@ -63,37 +60,28 @@ public class UsuarioController {
 	@PostMapping("/registro")
 	public Usuario registrarUsuario(@RequestBody Usuario usuario) {
 
-	    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-	    usuario.setPassword(
-	        encoder.encode(usuario.getPassword())
-	    );
+		usuario.setPassword(encoder.encode(usuario.getPassword()));
 
-	    usuario.setRol("ADMIN");
+		usuario.setRol("USER");
 
-	    return usuarioRepository.save(usuario);
+		return usuarioRepository.save(usuario);
 	}
 
 	@PostMapping("/login")
 	public Usuario login(@RequestBody Usuario loginRequest) {
 
-	    Optional<Usuario> optionalUsuario =
-	            usuarioRepository.findByEmail(loginRequest.getEmail());
+		Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(loginRequest.getEmail());
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-	    if (optionalUsuario.isPresent()) {
+		if (optionalUsuario.isPresent()
+				&& encoder.matches(loginRequest.getPassword(), optionalUsuario.get().getPassword())) {
 
-	        BCryptPasswordEncoder encoder =
-	                new BCryptPasswordEncoder();
+			return optionalUsuario.get();
+		}
 
-	        if (encoder.matches(
-	                loginRequest.getPassword(),
-	                optionalUsuario.get().getPassword())) {
-
-	            return optionalUsuario.get();
-	        }
-	    }
-
-	    throw new RuntimeException("Credenciales incorrectas");
+		throw new RuntimeException("Credenciales incorrectas");
 	}
 
 	@PutMapping("/{id}")
@@ -110,7 +98,9 @@ public class UsuarioController {
 		// SOLO CAMBIAR PASSWORD SI VIENE
 		if (datos.getPassword() != null && !datos.getPassword().isEmpty()) {
 
-			usuario.setPassword(datos.getPassword());
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			usuario.setPassword(encoder.encode(datos.getPassword()));
 
 		}
 
@@ -222,7 +212,9 @@ public class UsuarioController {
 
 		if (datos.getPassword() != null && !datos.getPassword().isEmpty()) {
 
-			usuario.setPassword(datos.getPassword());
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			usuario.setPassword(encoder.encode(datos.getPassword()));
 
 		}
 

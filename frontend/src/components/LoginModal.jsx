@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_URL } from "../config";
 
 function LoginModal({ onClose }) {
 
@@ -18,7 +19,7 @@ function LoginModal({ onClose }) {
         try {
 
             const response = await axios.post(
-                `${import.meta.env.VITE_API_URL}/usuarios/login`,
+                `${API_URL}/usuarios/login`,
                 {
                     email,
                     password
@@ -31,7 +32,7 @@ function LoginModal({ onClose }) {
 
             // Obtener usuario
             const usuarioResponse = await axios.get(
-                `${import.meta.env.VITE_API_URL}/usuarios/email/${email}`
+                `${API_URL}/usuarios/email/${email}`
             );
 
             localStorage.setItem(
@@ -67,7 +68,7 @@ function LoginModal({ onClose }) {
         try {
 
             await axios.post(
-                `${import.meta.env.VITE_API_URL}/usuarios/registro`,
+                `${API_URL}/usuarios/registro`,
                 {
                     nombre,
                     email,
@@ -86,6 +87,12 @@ function LoginModal({ onClose }) {
             setConfirmPassword("");
 
         } catch (error) {
+
+            console.log(error);
+
+            console.log(error.response);
+
+            console.log(error.response.data);
 
             toast.error("Error registrando usuario");
 

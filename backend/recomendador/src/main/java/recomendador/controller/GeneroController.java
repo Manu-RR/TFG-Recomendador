@@ -8,6 +8,7 @@ import recomendador.repository.GeneroRepository;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 // Controlador REST para géneros
 @RestController
 @RequestMapping("/generos")

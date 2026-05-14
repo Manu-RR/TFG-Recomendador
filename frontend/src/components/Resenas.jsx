@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { API_URL } from "../config";
 
 function Resenas({ juego }) {
 
@@ -29,7 +30,7 @@ function Resenas({ juego }) {
 
         axios
             .get(
-                `${import.meta.env.VITE_API_URL}/resenas/${juego.id}`
+                `${API_URL}/resenas/${juego.id}`
             )
             .then((response) => {
 
@@ -46,7 +47,7 @@ function Resenas({ juego }) {
         if (!comentario.trim()) return;
 
         await axios.post(
-            `${import.meta.env.VITE_API_URL}/resenas`,
+            `${API_URL}/resenas`,
             {
                 juegoId: juego.id,
                 nombreJuego: juego.name,
@@ -69,7 +70,7 @@ function Resenas({ juego }) {
     const eliminarResena = async (id) => {
 
         await axios.delete(
-            `${import.meta.env.VITE_API_URL}/resenas/${id}`
+            `${API_URL}/resenas/${id}`
         );
 
         cargarResenas();

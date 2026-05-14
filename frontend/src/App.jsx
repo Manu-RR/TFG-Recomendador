@@ -15,10 +15,9 @@ import {
 } from "react-router-dom";
 
 import GamePage from "./pages/GamePage";
+import { API_URL } from "./config";
 
 function App() {
-
-    console.log("API URL:", import.meta.env.VITE_API_URL);
 
     const [showLogin, setShowLogin] = useState(false);
     const [favoritos, setFavoritos] = useState([]);
@@ -32,7 +31,7 @@ function App() {
 
             axios
                 .get(
-                    `${import.meta.env.VITE_API_URL}/favoritos/${usuarioId}`
+                    `${API_URL}/favoritos/${usuarioId}`
                 )
                 .then((response) => {
 

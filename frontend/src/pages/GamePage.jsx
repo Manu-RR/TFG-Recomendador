@@ -6,6 +6,7 @@ import {
 
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_URL } from "../config";
 
 import Resenas from "../components/Resenas";
 
@@ -41,7 +42,7 @@ function GamePage() {
 
             const juegoResponse =
                 await axios.get(
-                    `${import.meta.env.VITE_API_URL}/rawg/juego/${id}`
+                    `${API_URL}/rawg/juego/${id}`
                 );
 
             setGame(juegoResponse.data);
@@ -50,7 +51,7 @@ function GamePage() {
 
             const screenshotsResponse =
                 await axios.get(
-                    `${import.meta.env.VITE_API_URL}/rawg/juego/${id}/screenshots`
+                    `${API_URL}/rawg/juego/${id}/screenshots`
                 );
 
             setScreenshots(
@@ -61,7 +62,7 @@ function GamePage() {
 
             const trailersResponse =
                 await axios.get(
-                    `${import.meta.env.VITE_API_URL}/rawg/juego/${id}/trailers`
+                    `${API_URL}/rawg/juego/${id}/trailers`
                 );
 
             setTrailers(
@@ -90,7 +91,7 @@ function GamePage() {
         try {
 
             await axios.post(
-                `${import.meta.env.VITE_API_URL}/lista`,
+                `${API_URL}/lista`,
                 {
                     juegoId: game.id,
 

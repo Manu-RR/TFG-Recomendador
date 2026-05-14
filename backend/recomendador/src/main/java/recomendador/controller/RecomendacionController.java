@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 
 @RequestMapping("/recomendaciones")

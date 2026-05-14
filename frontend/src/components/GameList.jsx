@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function GameList() {
 
@@ -69,7 +70,7 @@ function GameList() {
             try {
 
                 await axios.delete(
-                    `${import.meta.env.VITE_API_URL}/favoritos/${exists.id}`
+                    `${API_URL}/favoritos/${exists.id}`
                 );
 
                 setFavorites(
@@ -106,7 +107,7 @@ function GameList() {
                 };
 
                 const response = await axios.post(
-                    `${import.meta.env.VITE_API_URL}/favoritos/${usuarioId}`,
+                    `${API_URL}/favoritos/${usuarioId}`,
                     nuevoFavorito
                 );
 
@@ -137,7 +138,7 @@ function GameList() {
 
             axios
                 .get(
-                    `${import.meta.env.VITE_API_URL}/favoritos/${usuarioId}`
+                    `${API_URL}/favoritos/${usuarioId}`
                 )
                 .then((response) => {
 
@@ -161,7 +162,7 @@ function GameList() {
 
             axios
                 .get(
-                    `${import.meta.env.VITE_API_URL}/${usuarioId}`
+                    `${API_URL}/recomendaciones/${usuarioId}`
                 )
                 .then((response) => {
 
@@ -184,7 +185,7 @@ function GameList() {
         // JUEGOS
 
         axios
-            .get(`${import.meta.env.VITE_API_URL}/rawg/juegos`)
+            .get(`${API_URL}/rawg/juegos`)
             .then((response) => {
 
                 const juegosConDatos =

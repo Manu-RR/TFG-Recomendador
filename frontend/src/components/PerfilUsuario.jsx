@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { API_URL } from "../config";
 
 function PerfilUsuario() {
 
@@ -46,7 +47,7 @@ function PerfilUsuario() {
 
         axios
             .get(
-                `${import.meta.env.VITE_API_URL}/usuarios/${usuarioId}/perfil`
+                `${API_URL}/usuarios/${usuarioId}/perfil`
             )
             .then((response) => {
 
@@ -87,7 +88,7 @@ function PerfilUsuario() {
 
             await axios.put(
 
-                `${import.meta.env.VITE_API_URL}/usuarios/${usuarioId}/perfil`,
+                `${API_URL}/usuarios/${usuarioId}/perfil`,
 
                 {
                     nombre: nuevoNombre,
