@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { API_URL } from "../config";
+import toast from "react-hot-toast";
 
 function Resenas({ juego }) {
 
@@ -48,47 +49,72 @@ function Resenas({ juego }) {
 
         if (e) e.preventDefault();
 
-        if (!usuarioId) return;
+        try {
 
-        if (!comentario.trim()) {
+            if (!usuarioId) {
 
-            toast.error(
-                "La reseña está vacía"
-            );
+                toast.error(
+                    "Debes iniciar sesión"
+                );
 
-            return;
-        }
-        if (comentario.length > MAX_CARACTERES) {
-
-            toast.error(
-                "Has superado el límite"
-            );
-
-            return;
-        }
-
-        await axios.post(
-            `${API_URL}/resenas`,
-            {
-                juegoId: juego.id,
-                nombreJuego: juego.name,
-                comentario,
-                puntuacion,
-                usuario: {
-                    id: usuarioId
-                }
+                return;
             }
-        );
 
-        toast.success(
-            "Reseña publicada"
-        );
+            if (!comentario.trim()) {
 
-        setComentario("");
+                toast.error(
+                    "La reseña está vacía"
+                );
 
-        setPuntuacion(5);
+                return;
+            }
 
-        cargarResenas();
+            if (comentario.length > MAX_CARACTERES) {
+
+                toast.error(
+                    "Has superado el límite"
+                );
+
+                return;
+            }
+
+            const response = await axios.post(
+                `${API_URL}/resenas`,
+                {
+                    juegoId: juego.id,
+                    nombreJuego: juego.name,
+                    comentario,
+                    puntuacion,
+                    usuario: {
+                        id: usuarioId
+                    }
+                }
+            );
+
+            // AÑADIR RESEÑA AL INSTANTE
+
+            setResenas([
+                response.data,
+                ...resenas
+            ]);
+
+            toast.success(
+                "Reseña publicada"
+            );
+
+            setComentario("");
+
+            setPuntuacion(5);
+
+        } catch (error) {
+
+            console.error(error);
+
+            toast.error(
+                "Error publicando reseña"
+            );
+
+        }
 
     };
 
