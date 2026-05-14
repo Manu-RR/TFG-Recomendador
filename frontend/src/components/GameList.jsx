@@ -32,6 +32,8 @@ function GameList() {
 
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(true);
+
     // GENEROS
 
     const genres = [
@@ -197,13 +199,9 @@ function GameList() {
                             if (
                                 game.genres.some(
                                     g =>
-                                        g.name.includes(
-                                            "Shooter"
-                                        )
+                                        g.name.includes("Shooter")
                                         ||
-                                        g.name.includes(
-                                            "Strategy"
-                                        )
+                                        g.name.includes("Strategy")
                                 )
                             ) {
 
@@ -214,9 +212,7 @@ function GameList() {
                             if (
                                 game.genres.some(
                                     g =>
-                                        g.name.includes(
-                                            "Platformer"
-                                        )
+                                        g.name.includes("Platformer")
                                 )
                             ) {
 
@@ -230,8 +226,7 @@ function GameList() {
 
                                 dificultad,
 
-                                duracion:
-                                    game.playtime
+                                duracion: game.playtime
 
                             };
 
@@ -247,6 +242,11 @@ function GameList() {
                     "Error obteniendo juegos:",
                     error
                 );
+
+            })
+            .finally(() => {
+
+                setLoading(false);
 
             });
 
@@ -307,6 +307,34 @@ function GameList() {
             return 0;
 
         });
+
+        if (loading) {
+
+            return (
+
+                <div className="
+                    min-h-screen
+                    flex
+                    justify-center
+                    items-center
+                    bg-[#0B1120]
+                ">
+
+                    <div className="
+                        w-20
+                        h-20
+                        border-4
+                        border-cyan-400
+                        border-t-transparent
+                        rounded-full
+                        animate-spin
+                    "></div>
+
+                </div>
+
+            );
+        }
+
 
     return (
 
