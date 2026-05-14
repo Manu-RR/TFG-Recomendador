@@ -44,7 +44,9 @@ function Resenas({ juego }) {
 
     };
 
-    const publicarResena = async () => {
+    const publicarResena = async (e) => {
+
+        if (e) e.preventDefault();
 
         if (!usuarioId) return;
 
@@ -279,6 +281,7 @@ function Resenas({ juego }) {
                     </div>
 
                     <button
+                        type="button"
                         onClick={publicarResena}
                         className="
                             mt-6
