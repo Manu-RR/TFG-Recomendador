@@ -364,6 +364,11 @@ function App() {
 
                         <Toaster
                             position="top-right"
+                            toastOptions={{
+                                style: {
+                                    zIndex: 999999
+                                }
+                            }}
                         />
 
                     </div>
